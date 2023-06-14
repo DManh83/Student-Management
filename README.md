@@ -13,14 +13,14 @@ Backend for Student Management
 - To create new migration file
 
 ```bash
-   npm run db:migration:generate {file-name}
+   npx sequelize-cli model:generate {file-name}
 ```
 
 - New migration file will be created with format name `{timestamp}-{file-name}.js` in src/migrations folder
 - To run migration run command:
 
 ```bash
-   npm run db:migrate
+   npx sequelize-cli db:migrate
 ```
 
 ## Seeder
@@ -28,7 +28,7 @@ Backend for Student Management
 - To create new seed file
 
 ```bash
-   npm run db:seed:generate {file-name}
+   npx sequelize-cli seed:generate {file-name}
 ```
 
 - New seed file will be created with format name `{timestamp}-{file-name}.js` in src/seeders folder
@@ -36,7 +36,7 @@ Backend for Student Management
 - To seed data run command:
 
 ```bash
-   npm run db:seed:all
+   npx sequelize-cli db:seed:all
 ```
 
 Create .env file and prepare all env variables
