@@ -45,5 +45,32 @@ export const createStudent = (body) => new Promise(async (resolve, reject) => {
 })
 
 //Update
+export const updateStudent = ({ id, ...body }) => new Promise(async (resolve, reject) => {
+    try {
+        const response = await db.Student.update(body, {
+            where: { id }
+        })
+        //console.log(response)
+        resolve({
+            err: response[0] > 0 ? 0 : 1,
+            mes: response[0] > 0 ? `${response[0]} student update` : 'Cannot update student / Student id not found'
+        })
+    } catch (error) {
+        reject(error)
+    }
+})
 
 //Delete
+export const deleteStudent = ({ ids }) => new Promise(async (resolve, reject) => {
+    try {
+        const response = await db.Student.destroy({
+            where: { id: ids }
+        })
+        resolve({
+            err: response > 0 ? 0 : 1,
+            mes: `${response} student(s) delete`
+        })
+    } catch (error) {
+        reject(error)
+    }
+})
