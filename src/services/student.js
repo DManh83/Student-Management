@@ -1,7 +1,7 @@
 import db from '../models'
 import { Op } from 'sequelize'
 
-//Search
+//Get list
 export const getStudents = ({ page, limit, order, name, ...query }) => new Promise(async (resolve, reject) => {
     try {
         const queries = { raw: true, nest: true }
@@ -22,13 +22,13 @@ export const getStudents = ({ page, limit, order, name, ...query }) => new Promi
             mes: response ? 'Got' : 'Cannot found students',
             studentData: response
         })
+        // console.log(response)
     } catch (error) {
         reject(error)
     }
 })
 
 //Create
-
 export const createStudent = (body) => new Promise(async (resolve, reject) => {
     try {
         const response = await db.Student.findOrCreate({
@@ -45,32 +45,88 @@ export const createStudent = (body) => new Promise(async (resolve, reject) => {
 })
 
 //Update
-export const updateStudent = ({ id, ...body }) => new Promise(async (resolve, reject) => {
+export const updateStudent = (body) => new Promise(async (resolve, reject) => {
     try {
-        const response = await db.Student.update(body, {
-            where: { id }
+        const response = await db.Student.findOne({
+            where: { id: body.id }
         })
         //console.log(response)
-        resolve({
-            err: response[0] > 0 ? 0 : 1,
-            mes: response[0] > 0 ? `${response[0]} student update` : 'Cannot update student / Student id not found'
-        })
+
+        if (resolve) {
+            response.name = body.name
+            response.gender = body.gender
+            response.email = body.email
+            response.phone = body.phone
+            response.address = body.address
+
+            await response.save()
+            const allStudents = await db.Student.findAll()
+            resolve(allStudents)
+        }
     } catch (error) {
         reject(error)
     }
 })
 
 //Delete
-export const deleteStudent = ({ ids }) => new Promise(async (resolve, reject) => {
+export const deleteStudentById = (id) => new Promise(async (resolve, reject) => {
+    try {
+        const student = await db.Student.findOne({
+            where: { id: id }
+        })
+        if (student) {
+            await student.destroy()
+        }
+        resolve()
+    } catch (e) {
+        reject(e)
+    }
+})
+
+export const getStudentInfoById = (id) => new Promise(async (resolve, reject) => {
+    try {
+        const response = await db.Student.findOne({
+            where: { id: id },
+            raw: true
+        })
+
+        if (response) {
+            resolve(response)
+        } else resolve({
+            err: response ? 0 : 1,
+            mes: response ? 'Ok' : 'Cannot found Student'
+        })
+
+    } catch (e) {
+        reject(e)
+    }
+})
+
+export const deleteStudent = (id) => new Promise(async (resolve, reject) => {
     try {
         const response = await db.Student.destroy({
-            where: { id: ids }
+            where: { id: id }
         })
         resolve({
-            err: response > 0 ? 0 : 1,
-            mes: `${response} student(s) delete`
+            err: response ? 0 : 1,
+            mes: response ? 'student deleted' : 'Cannot found Student'
         })
     } catch (error) {
         reject(error)
     }
 })
+
+// export const getAllStudents = () => Promise(async (resolve, reject) => {
+//     try {
+//         const students = await db.Student.findAll({
+//             raw: true
+//         })
+//         resolve(students)
+//     } catch (e) {
+//         reject(e)
+//     }
+// })
+
+
+
+

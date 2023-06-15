@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 require('dotenv').config()
 import initRoutes from './src/routes'
+import viewEngine from './src/config/viewEngine'
 require('./connection_database')
 
 const app = express()
@@ -14,8 +15,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 initRoutes(app)
+viewEngine(app)
 
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 8888
 
 const listener = app.listen(PORT, () => {
   console.log('Server is running on the post ' + listener.address().port)

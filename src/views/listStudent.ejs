@@ -1,0 +1,57 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get List Student</title>
+</head>
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+
+<body>
+    <table style="width:100%">
+        <tr>
+            <td>Student Id</td>
+            <td>Name</td>
+            <td>Gender</td>
+            <td>Email</td>
+            <td>Phone</td>
+            <td>Address</td>
+        </tr>
+
+        <% for(let i=0; i < data.length; i++) { %>
+            <tr>
+                <td>
+                    <%= data[i].id %>
+                </td>
+                <td>
+                    <%= data[i].name %>
+                </td>
+                <td>
+                    <%= data[i].gender %>
+                </td>
+                <td>
+                    <%= data[i].email %>
+                </td>
+                <td>
+                    <%= data[i].phone %>
+                </td>
+                <td>
+                    <%= data[i].address %>
+                </td>
+                <td>
+                    <a href="/api/v1/student/edit-form?id=<%=data[i].id%>" type="button">Edit</a>
+                    <a href="/api/v1/student/delete-student?id=<%=data[i].id%>" type="button">Delete</a>
+                </td>
+            </tr>
+            <% } %>
+    </table>
+</body>
+
+</html>

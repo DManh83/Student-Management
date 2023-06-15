@@ -2,26 +2,27 @@ GET http://localhost:5000/api/v1/student
 
 ###
 GET http://localhost:5000/api/v1/student/?order[]=id&order[]=desc
+
 ###
 POST http://localhost:5000/api/v1/student/
 Content-Type: application/json
 
 {
-    "name": "Nguyen Van A",
-    "sex": "Nam",
+    "name": "Nguyen Van C",
+    "gender": "Nam",
     "email": "example531@gmail.com",
     "phone": "123542458",
     "address": "Ha giang"
 }
 
 ###
-PUT http://localhost:5000/api/v1/student/
-Content-Type: application/json
-
-{
-    "id": 11,
-    "sex": "Nu"
-}
+DELETE  http://localhost:5000/api/v1/student/?id=11
 
 ###
-DELETE  http://localhost:5000/api/v1/student/?ids[0]=11&ids[1]=12
+GET http://localhost:5000/api/v1/student/create-form
+
+###
+GET http://localhost:5000/api/v1/student/edit-form?id=1
+
+###
+GET  http://localhost:5000/api/v1/student/delete-student?id=1
